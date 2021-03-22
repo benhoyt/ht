@@ -1,6 +1,6 @@
 // Simple hash table implementation in C
 
-#include "ht.h"
+#include "../ht.h"
 
 #include <ctype.h>
 #include <stdio.h>
