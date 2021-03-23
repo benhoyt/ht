@@ -1,4 +1,4 @@
-// Simple hash table implementation in C
+// Print frequencies of unique words, most frequent first 
 
 #include "../ht.h"
 

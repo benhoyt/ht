@@ -7,9 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define INITIAL_SIZE 16
-#define FNV_OFFSET 14695981039346656037UL
-#define FNV_PRIME 1099511628211UL
+#define INITIAL_SIZE 8
 
 ht* _ht_create(size_t size) {
     // Allocate space for hash table struct.
@@ -20,10 +18,10 @@ ht* _ht_create(size_t size) {
     table->_length = 0;
     table->_capacity = size * 2;
 
-    // Allocate space for entry buckets.
-    table->_entries = malloc(sizeof(_ht_entry) * table->_capacity);
+    // Allocate (zero'd) space for entry buckets.
+    table->_entries = calloc(table->_capacity, sizeof(_ht_entry));
     if (table->_entries == NULL) {
-        free(table); // free table before we return!
+        free(table); // error, free table before we return!
         return NULL;
     }
     return table;
@@ -32,6 +30,22 @@ ht* _ht_create(size_t size) {
 ht* ht_create(void) {
     return _ht_create(INITIAL_SIZE);
 }
+
+void ht_destroy(ht* table) {
+    // First free allocated keys.
+    for (size_t i = 0; i < table->_capacity; i++) {
+        if (table->_entries[i].key != NULL) {
+            free(table->_entries[i].key);
+        }
+    }
+
+    // Then free entries array and table itself.
+    free(table->_entries);
+    free(table);
+}
+
+#define FNV_OFFSET 14695981039346656037UL
+#define FNV_PRIME 1099511628211UL
 
 // Return 64-bit FNV-1 hash for key (NUL-terminated). See description at:
 // https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
@@ -65,7 +79,8 @@ void* ht_get(ht* table, const char* key) {
     return NULL;
 }
 
-// Expand hash table to twice its current size.
+// Expand hash table to twice its current size. Return true on success,
+// false if out of memory.
 static bool _ht_expand(ht* table) {
     // Creating new table so we can use ht_set to move items into it.
     ht* new_table = _ht_create(table->_capacity);
@@ -79,7 +94,8 @@ static bool _ht_expand(ht* table) {
         if (entry.key != NULL) {
             const char* key = ht_set(new_table, entry.key, entry.value);
             if (key == NULL) {
-                return NULL;
+                ht_destroy(new_table);
+                return false;
             }
         }
     }
@@ -93,7 +109,6 @@ static bool _ht_expand(ht* table) {
     free(new_table);
     return true;
 }
-
 
 const char* ht_set(ht* table, const char* key, void* value) {
     assert(value != NULL);
@@ -155,9 +170,10 @@ bool ht_next(hti* it) {
     // Loop till we've hit end of entries array.
     ht* table = it->_table;
     while (it->_index < table->_capacity) {
-        size_t i = it->_index++;
+        size_t i = it->_index;
+        it->_index++;
         if (table->_entries[i].key != NULL) {
-            // Found next non-empty item, update iterator's key and value.
+            // Found next non-empty item, update iterator key and value.
             _ht_entry entry = table->_entries[i];
             it->key = entry.key;
             it->value = entry.value;
@@ -165,17 +181,4 @@ bool ht_next(hti* it) {
         }
     }
     return false;
-}
-
-void ht_destroy(ht* table) {
-    // First free allocated keys.
-    for (size_t i = 0; i < table->_capacity; i++) {
-        if (table->_entries[i].key != NULL) {
-            free(table->_entries[i].key);
-        }
-    }
-
-    // Then free entries array and table itself.
-    free(table->_entries);
-    free(table);
 }
