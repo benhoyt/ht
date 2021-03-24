@@ -1,38 +1,36 @@
-// Simple performance test of C hash table get
+// Simple performance test of C hash table set
 
 /*
-
-C version (this code):
-----------------------
+C version (this code)
+---------------------
 $ python3 samples/genuniques.py 1000000 > samples/uniques.txt
-$ gcc -O2 -o perfget-c samples/perfget.c ht.c
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.627126000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.730205000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.797257000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.680815000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.933633000s
-MINIMUM TIME: 4.63s (31% faster than Go)
+$ gcc -O2 -o perfset-c samples/perfset.c ht.c
+$ ./perfset-c samples/uniques.txt
+setting 1000000 keys: 0.675686000s
+$ ./perfset-c samples/uniques.txt
+setting 1000000 keys: 0.707720000s
+$ ./perfset-c samples/uniques.txt
+setting 1000000 keys: 0.626419000s
+$ ./perfset-c samples/uniques.txt
+setting 1000000 keys: 0.613833000s
+$ ./perfset-c samples/uniques.txt
+setting 1000000 keys: 0.636187000s
+MINIMUM TIME: 0.613s (23% slower than Go)
 
-
-Go version (see perfget.go):
-----------------------------
-$ go build -o perfget-go samples/perfget.go
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 7.03704846s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 7.152414349s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 6.753324668s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 6.841139023s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 7.043131656s
-MINIMUM TIME: 6.75s
+Go version (see perfset.go)
+---------------------------
+go build -o perfset-go samples/perfset.go
+$ ./perfset-go samples/uniques.txt
+setting 1000000 keys: 503.734977ms
+$ ./perfset-go samples/uniques.txt
+setting 1000000 keys: 509.6396ms
+$ ./perfset-go samples/uniques.txt
+setting 1000000 keys: 504.439856ms
+$ ./perfset-go samples/uniques.txt
+setting 1000000 keys: 498.694129ms
+$ ./perfset-go samples/uniques.txt
+setting 1000000 keys: 503.554704ms
+MINIMUM TIME: 0.499s
 */
 
 #include "../ht.h"
@@ -128,16 +126,21 @@ int main(int argc, char **argv) {
         i++;
     }
 
-    int runs = 100;
+    ht* table = ht_create();
+    if (table == NULL) {
+        exit_nomem();
+    }
+
+    int value = 1; // dummy value
     clock_t start = clock();
-    for (int run=0; run<runs; run++) {
-        for (int i=0; i<ht_length(counts); i++) {
-            found = ht_get(counts, keys[i]);
+    for (int i=0; i<ht_length(counts); i++) {
+        if (ht_set(table, keys[i], &value) == NULL) {
+            exit_nomem();
         }
     }
     clock_t end = clock();
     double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("%d runs getting %lu keys: %.09fs\n", runs, ht_length(counts), elapsed);
+    printf("setting %lu keys: %.09fs\n", ht_length(counts), elapsed);
 
     return 0;
 }

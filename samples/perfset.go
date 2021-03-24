@@ -1,4 +1,4 @@
-// Simple performance test of Go map get
+// Simple performance test of Go map set
 
 package main
 
@@ -45,14 +45,12 @@ func main() {
 		keys = append(keys, k)
 	}
 
-	const runs = 100
+	table := make(map[string]int)
 	start := time.Now()
-	for run := 0; run < runs; run++ {
-		for i := 0; i < len(counts); i++ {
-			_ = counts[keys[i]]
-		}
+	for i := 0; i < len(counts); i++ {
+		table[keys[i]] = 1
 	}
 	end := time.Now()
 	elapsed := end.Sub(start)
-	fmt.Printf("%d runs getting %d keys: %v\n", runs, len(counts), elapsed)
+	fmt.Printf("setting %d keys: %v\n", len(counts), elapsed)
 }
