@@ -9,7 +9,7 @@
 
 #define INITIAL_SIZE 8
 
-ht* _ht_create(size_t size) {
+static ht* _ht_create(size_t size) {
     // Allocate space for hash table struct.
     ht* table = malloc(sizeof(ht));
     if (table == NULL) {
