@@ -2,6 +2,9 @@
 
 /*
 
+NOTE - words.txt is from here (public domain):
+https://github.com/dwyl/english-words/
+
 C version (this code):
 ----------------------
 $ gcc -O2 -o perfget-c samples/perfget.c ht.c

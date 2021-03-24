@@ -19,9 +19,8 @@ int cmp(const void* a, const void* b) {
 item* binary_search(item* items, size_t size, const char* key) {
     size_t low = 0;
     size_t high = size;
-
     while (low < high) {
-        size_t mid = (low+high) / 2;
+        size_t mid = (low + high) / 2;
         int c = strcmp(items[mid].key, key);
         if (c == 0) {
             return &items[mid];
@@ -46,13 +45,13 @@ int main(void) {
 
     item key = {"bob", 0};
     item* found = bsearch(&key, items, num_items, sizeof(item), cmp);
-    if (!found) {
+    if (found == NULL) {
         return 1;
     }
     printf("bsearch: value of 'bob' is %d\n", found->value);
 
     found = binary_search(items, num_items, "bob");
-    if (!found) {
+    if (found == NULL) {
         return 1;
     }
     printf("binary_search: value of 'bob' is %d\n", found->value);

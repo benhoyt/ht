@@ -10,7 +10,7 @@ typedef struct {
 } item;
 
 item* linear_search(item* items, size_t size, const char* key) {
-    for (size_t i=0; i<size; i++) {
+    for (size_t i = 0; i < size; i++) {
         if (strcmp(items[i].key, key) == 0) {
             return &items[i];
         }
@@ -25,7 +25,7 @@ int main(void) {
     size_t num_items = sizeof(items) / sizeof(item);
 
     item* found = linear_search(items, num_items, "bob");
-    if (!found) {
+    if (found == NULL) {
         return 1;
     }
     printf("linear_search: value of 'bob' is %d\n", found->value);

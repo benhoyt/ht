@@ -1,5 +1,53 @@
 // Performance comparison of lookups: linear search, binary search, hash table
 
+/*
+
+$ gcc -O2 -o perflbh samples/perflbh.c ht.c
+$ ./perflbh 
+NUM ITEMS: 1
+  linear, 5000000 runs: 0.046263000s
+  binary, 5000000 runs: 0.038028000s
+  hash  , 5000000 runs: 0.055019000s
+NUM ITEMS: 2
+  linear, 5000000 runs: 0.029790500s
+  binary, 5000000 runs: 0.042562000s
+  hash  , 5000000 runs: 0.051395500s
+NUM ITEMS: 3
+  linear, 5000000 runs: 0.034900667s
+  binary, 5000000 runs: 0.045250667s
+  hash  , 5000000 runs: 0.050218000s
+NUM ITEMS: 4
+  linear, 5000000 runs: 0.042225750s
+  binary, 5000000 runs: 0.053457000s
+  hash  , 5000000 runs: 0.049959500s
+NUM ITEMS: 5
+  linear, 5000000 runs: 0.048300800s
+  binary, 5000000 runs: 0.054513400s
+  hash  , 5000000 runs: 0.056074000s
+NUM ITEMS: 6
+  linear, 5000000 runs: 0.056408000s
+  binary, 5000000 runs: 0.062688833s
+  hash  , 5000000 runs: 0.059385833s
+NUM ITEMS: 7
+  linear, 5000000 runs: 0.062235571s  # this is where linear starts getting slower
+  binary, 5000000 runs: 0.059203714s
+  hash  , 5000000 runs: 0.058669571s
+NUM ITEMS: 8
+  linear, 5000000 runs: 0.074767000s
+  binary, 5000000 runs: 0.063110250s
+  hash  , 5000000 runs: 0.054628375s
+NUM ITEMS: 9
+  linear, 5000000 runs: 0.086145111s
+  binary, 5000000 runs: 0.066840778s
+  hash  , 5000000 runs: 0.057300111s
+NUM ITEMS: 10
+  linear, 5000000 runs: 0.085599600s
+  binary, 5000000 runs: 0.069974600s
+  hash  , 5000000 runs: 0.052592700s
+...
+
+*/
+
 #include "../ht.h"
 
 #include <ctype.h>
