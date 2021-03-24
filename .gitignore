@@ -7,4 +7,5 @@
 /perfget-go
 /perfset-c
 /perfset-go
-samples/uniques.txt
+/stats
+samples/similar.txt

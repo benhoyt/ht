@@ -4,35 +4,33 @@
 
 C version (this code):
 ----------------------
-$ python3 samples/genuniques.py 1000000 > samples/uniques.txt
 $ gcc -O2 -o perfget-c samples/perfget.c ht.c
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.627126000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.730205000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.797257000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.680815000s
-$ ./perfget-c samples/uniques.txt
-100 runs getting 1000000 keys: 4.933633000s
-MINIMUM TIME: 4.63s (31% faster than Go)
-
+$ ./perfget-c samples/words.txt
+10 runs getting 466550 keys: 0.317274000s
+$ ./perfget-c samples/words.txt
+10 runs getting 466550 keys: 0.330408000s
+$ ./perfget-c samples/words.txt
+10 runs getting 466550 keys: 0.316012000s
+$ ./perfget-c samples/words.txt
+10 runs getting 466550 keys: 0.315882000s
+$ ./perfget-c samples/words.txt
+10 runs getting 466550 keys: 0.312607000s
+MINIMUM TIME: 0.312s (2% faster than Go)
 
 Go version (see perfget.go):
 ----------------------------
 $ go build -o perfget-go samples/perfget.go
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 7.03704846s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 7.152414349s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 6.753324668s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 6.841139023s
-$ ./perfget-go samples/uniques.txt
-100 runs getting 1000000 keys: 7.043131656s
-MINIMUM TIME: 6.75s
+$ ./perfget-go samples/words.txt 
+10 runs getting 466550 keys: 321.039528ms
+$ ./perfget-go samples/words.txt 
+10 runs getting 466550 keys: 322.271246ms
+$ ./perfget-go samples/words.txt 
+10 runs getting 466550 keys: 330.679997ms
+$ ./perfget-go samples/words.txt 
+10 runs getting 466550 keys: 318.654764ms
+$ ./perfget-go samples/words.txt 
+10 runs getting 466550 keys: 343.699669ms
+MINIMUM TIME: 0.318s
 */
 
 #include "../ht.h"
@@ -128,7 +126,7 @@ int main(int argc, char **argv) {
         i++;
     }
 
-    int runs = 100;
+    int runs = 10;
     clock_t start = clock();
     for (int run=0; run<runs; run++) {
         for (int i=0; i<ht_length(counts); i++) {

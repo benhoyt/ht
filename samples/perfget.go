@@ -45,7 +45,7 @@ func main() {
 		keys = append(keys, k)
 	}
 
-	const runs = 100
+	const runs = 10
 	start := time.Now()
 	for run := 0; run < runs; run++ {
 		for i := 0; i < len(counts); i++ {

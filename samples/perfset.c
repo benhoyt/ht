@@ -3,34 +3,33 @@
 /*
 C version (this code)
 ---------------------
-$ python3 samples/genuniques.py 1000000 > samples/uniques.txt
 $ gcc -O2 -o perfset-c samples/perfset.c ht.c
-$ ./perfset-c samples/uniques.txt
-setting 1000000 keys: 0.675686000s
-$ ./perfset-c samples/uniques.txt
-setting 1000000 keys: 0.707720000s
-$ ./perfset-c samples/uniques.txt
-setting 1000000 keys: 0.626419000s
-$ ./perfset-c samples/uniques.txt
-setting 1000000 keys: 0.613833000s
-$ ./perfset-c samples/uniques.txt
-setting 1000000 keys: 0.636187000s
-MINIMUM TIME: 0.613s (23% slower than Go)
+$ ./perfset-c samples/words.txt
+setting 466550 keys: 0.120742000s
+$ ./perfset-c samples/words.txt
+setting 466550 keys: 0.117228000s
+$ ./perfset-c samples/words.txt
+setting 466550 keys: 0.119655000s
+$ ./perfset-c samples/words.txt
+setting 466550 keys: 0.119892000s
+$ ./perfset-c samples/words.txt
+setting 466550 keys: 0.123454000s
+MINIMUM TIME: 0.117s (41% faster than Go)
 
 Go version (see perfset.go)
 ---------------------------
-go build -o perfset-go samples/perfset.go
-$ ./perfset-go samples/uniques.txt
-setting 1000000 keys: 503.734977ms
-$ ./perfset-go samples/uniques.txt
-setting 1000000 keys: 509.6396ms
-$ ./perfset-go samples/uniques.txt
-setting 1000000 keys: 504.439856ms
-$ ./perfset-go samples/uniques.txt
-setting 1000000 keys: 498.694129ms
-$ ./perfset-go samples/uniques.txt
-setting 1000000 keys: 503.554704ms
-MINIMUM TIME: 0.499s
+$ go build -o perfset-go samples/perfset.go
+$ ./perfset-go samples/words.txt
+setting 466550 keys: 199.601477ms
+$ ./perfset-go samples/words.txt
+setting 466550 keys: 200.878177ms
+$ ./perfset-go samples/words.txt
+setting 466550 keys: 210.576502ms
+$ ./perfset-go samples/words.txt
+setting 466550 keys: 200.24748ms
+$ ./perfset-go samples/words.txt
+setting 466550 keys: 216.921344ms
+MINIMUM TIME: 0.199s
 */
 
 #include "../ht.h"
