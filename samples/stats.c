@@ -39,7 +39,7 @@ struct ht {
 #define FNV_OFFSET 14695981039346656037UL
 #define FNV_PRIME 1099511628211UL
 
-static uint64_t _hash(const char* key) {
+static uint64_t hash_key(const char* key) {
     uint64_t hash = FNV_OFFSET;
     for (const char* p = key; *p; p++) {
         hash ^= (uint64_t)(unsigned char)(*p);
@@ -50,7 +50,7 @@ static uint64_t _hash(const char* key) {
 
 // Copied from ht_get, but return probe length instead of value.
 size_t get_probe_len(ht* table, const char* key) {
-    uint64_t hash = _hash(key);
+    uint64_t hash = hash_key(key);
     size_t index = (size_t)(hash & (uint64_t)(table->capacity - 1));
 
     size_t probe_len = 0;
