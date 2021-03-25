@@ -5,6 +5,9 @@
 $ gcc -O2 -Wall -o demo samples/demo.c ht.c
 $ echo 'foo bar the bar bar bar the' | ./demo
 
+See also:
+https://stackoverflow.com/questions/5134891/how-do-i-use-valgrind-to-find-memory-leaks
+
 */
 
 #include "../ht.h"
