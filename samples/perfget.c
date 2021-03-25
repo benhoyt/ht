@@ -1,40 +1,6 @@
 // Simple performance test of C hash table get
 
-/*
-
-NOTE - words.txt is from here (public domain):
-https://github.com/dwyl/english-words/
-
-C version (this code):
-----------------------
-$ gcc -Wall -O2 -o perfget-c samples/perfget.c ht.c
-$ ./perfget-c samples/words.txt
-10 runs getting 466550 keys: 0.317274000s
-$ ./perfget-c samples/words.txt
-10 runs getting 466550 keys: 0.330408000s
-$ ./perfget-c samples/words.txt
-10 runs getting 466550 keys: 0.316012000s
-$ ./perfget-c samples/words.txt
-10 runs getting 466550 keys: 0.315882000s
-$ ./perfget-c samples/words.txt
-10 runs getting 466550 keys: 0.312607000s
-MINIMUM TIME: 0.312s (2% faster than Go)
-
-Go version (see perfget.go):
-----------------------------
-$ go build -o perfget-go samples/perfget.go
-$ ./perfget-go samples/words.txt 
-10 runs getting 466550 keys: 321.039528ms
-$ ./perfget-go samples/words.txt 
-10 runs getting 466550 keys: 322.271246ms
-$ ./perfget-go samples/words.txt 
-10 runs getting 466550 keys: 330.679997ms
-$ ./perfget-go samples/words.txt 
-10 runs getting 466550 keys: 318.654764ms
-$ ./perfget-go samples/words.txt 
-10 runs getting 466550 keys: 343.699669ms
-MINIMUM TIME: 0.318s
-*/
+// See perftest.sh for results
 
 #include "../ht.h"
 
@@ -137,8 +103,8 @@ int main(int argc, char **argv) {
         }
     }
     clock_t end = clock();
-    double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("%d runs getting %lu keys: %.09fs\n", runs, ht_length(counts), elapsed);
+    double elapsed_ms = (double)(end - start) / CLOCKS_PER_SEC * 1000;
+    printf("%d runs getting %lu keys: %.03fms\n", runs, ht_length(counts), elapsed_ms);
 
     return 0;
 }
