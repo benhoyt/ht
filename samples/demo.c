@@ -1,5 +1,12 @@
 // Simple hash table demonstration program
 
+/*
+
+$ gcc -O2 -Wall -o demo samples/demo.c ht.c
+$ echo 'foo bar the bar bar bar the' | ./demo
+
+*/
+
 #include "../ht.h"
 
 #include <ctype.h>
@@ -8,8 +15,8 @@
 
 // Example:
 // $ echo 'foo bar the bar bar bar the' | ./demo
-// bar 4
 // foo 1
+// bar 4
 // the 2
 // 3
 

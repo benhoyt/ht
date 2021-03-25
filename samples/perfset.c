@@ -3,7 +3,7 @@
 /*
 C version (this code)
 ---------------------
-$ gcc -O2 -o perfset-c samples/perfset.c ht.c
+$ gcc -Wall -O2 -o perfset-c samples/perfset.c ht.c
 $ ./perfset-c samples/words.txt
 setting 466550 keys: 0.120742000s
 $ ./perfset-c samples/words.txt

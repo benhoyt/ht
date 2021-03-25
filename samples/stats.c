@@ -25,8 +25,20 @@ void exit_nomem(void) {
 }
 
 // Copied from ht.c
+typedef struct {
+    char* key;  // key is NULL if this slot is empty
+    void* value;
+} ht_entry;
+
+struct ht {
+    ht_entry* entries;  // hash slots
+    size_t capacity;    // size of _entries array
+    size_t length;      // number of items in hash table
+};
+
 #define FNV_OFFSET 14695981039346656037UL
 #define FNV_PRIME 1099511628211UL
+
 static uint64_t _hash(const char* key) {
     uint64_t hash = FNV_OFFSET;
     for (const char* p = key; *p; p++) {
@@ -39,16 +51,16 @@ static uint64_t _hash(const char* key) {
 // Copied from ht_get, but return probe length instead of value.
 size_t get_probe_len(ht* table, const char* key) {
     uint64_t hash = _hash(key);
-    size_t index = (size_t)(hash & (uint64_t)(table->_capacity - 1));
+    size_t index = (size_t)(hash & (uint64_t)(table->capacity - 1));
 
     size_t probe_len = 0;
-    while (table->_entries[index].key != NULL) {
+    while (table->entries[index].key != NULL) {
         probe_len++;
-        if (strcmp(key, table->_entries[index].key) == 0) {
+        if (strcmp(key, table->entries[index].key) == 0) {
             return probe_len;
         }
         index++;
-        if (index >= table->_capacity) {
+        if (index >= table->capacity) {
             index = 0;
         }
     }
@@ -93,7 +105,7 @@ int main(void) {
     }
 
     printf("len=%lu cap=%lu avgprobe=%.3f\n",
-        ht_length(counts), counts->_capacity, (double)total_probes / ht_length(counts));
+        ht_length(counts), counts->capacity, (double)total_probes / ht_length(counts));
 
     ht_destroy(counts);
     return 0;

@@ -7,7 +7,7 @@ https://github.com/dwyl/english-words/
 
 C version (this code):
 ----------------------
-$ gcc -O2 -o perfget-c samples/perfget.c ht.c
+$ gcc -Wall -O2 -o perfget-c samples/perfget.c ht.c
 $ ./perfget-c samples/words.txt
 10 runs getting 466550 keys: 0.317274000s
 $ ./perfget-c samples/words.txt

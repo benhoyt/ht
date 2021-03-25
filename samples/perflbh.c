@@ -2,7 +2,7 @@
 
 /*
 
-$ gcc -O2 -o perflbh samples/perflbh.c ht.c
+$ gcc -O2 -Wall -o perflbh samples/perflbh.c ht.c
 $ ./perflbh 
 NUM ITEMS: 1
   linear, 5000000 runs: 0.046263000s

@@ -25,6 +25,18 @@ index 15: empty
 #include <stdio.h>
 #include <stdlib.h>
 
+// Copied from ht.c
+typedef struct {
+    char* key;  // key is NULL if this slot is empty
+    void* value;
+} ht_entry;
+
+struct ht {
+    ht_entry* entries;  // hash slots
+    size_t capacity;    // size of _entries array
+    size_t length;      // number of items in hash table
+};
+
 typedef struct {
     char* key;
     int value;
@@ -52,10 +64,10 @@ int main(void) {
         }
     }
 
-    for (int i = 0; i < table->_capacity; i++) {
-        if (table->_entries[i].key != NULL) {
+    for (int i = 0; i < table->capacity; i++) {
+        if (table->entries[i].key != NULL) {
             printf("index %d: key %s, value %d\n",
-                i, table->_entries[i].key, *(int*)table->_entries[i].value);
+                i, table->entries[i].key, *(int*)table->entries[i].value);
         } else {
             printf("index %d: empty\n", i);
         }

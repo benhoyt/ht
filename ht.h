@@ -6,19 +6,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-// Hash table entry (this is not actually part of the public API).
-typedef struct {
-    char* key;
-    void* value;
-} _ht_entry;
-
 // Hash table structure: create with ht_create, free with ht_destroy.
-typedef struct {
-    // Don't use these fields directly.
-    _ht_entry* _entries; // hash buckets (entry.key != NULL if populated)
-    size_t _capacity;    // size of _entries array
-    size_t _length;      // number of items in hash table
-} ht;
+typedef struct ht ht;
 
 // Hash table iterator: create with ht_iterator, iterate with ht_next.
 typedef struct {
