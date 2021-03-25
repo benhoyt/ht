@@ -2,12 +2,12 @@
 
 /*
 
-$ gcc -O2 -o stats samples/stats.c ht.c
-$ ./stats <samples/words.txt 
-len=466550 cap=1048576 avgprobe=1.429
-$ python3 samples/gensimilar.py 466550 >samples/similar.txt 
-$ ./stats <samples/similar.txt 
-len=466550 cap=1048576 avgprobe=5.024
+$ python3 samples/gensimilar.py 466550 >samples/similar.txt
+$ gcc -O2 -Wall -o stats samples/stats.c ht.c
+$ ./stats <samples/words.txt
+len=466550 cap=1048576 avgprobe=1.402
+$ ./stats <samples/similar.txt
+len=466550 cap=1048576 avgprobe=1.378
 
 */
 
@@ -30,8 +30,8 @@ void exit_nomem(void) {
 static uint64_t _hash(const char* key) {
     uint64_t hash = FNV_OFFSET;
     for (const char* p = key; *p; p++) {
+        hash ^= (uint64_t)(unsigned char)(*p);
         hash *= FNV_PRIME;
-        hash ^= (uint64_t)(*p);
     }
     return hash;
 }
