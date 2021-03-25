@@ -1,5 +1,13 @@
 // Examples of binary search (with and without bsearch)
 
+/*
+
+$ gcc -O2 -o bsearch samples/bsearch.c && ./bsearch 
+bsearch: value of 'bob' is 11
+binary_search: value of 'bob' is 11
+
+*/
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,6 +25,9 @@ int cmp(const void* a, const void* b) {
 }
 
 item* binary_search(item* items, size_t size, const char* key) {
+    if (size + size < size) {
+        return NULL; // size too big; avoid overflow
+    }
     size_t low = 0;
     size_t high = size;
     while (low < high) {
