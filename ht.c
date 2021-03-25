@@ -22,7 +22,11 @@ struct ht {
 
 #define INITIAL_SIZE 8
 
-static ht* _ht_create(size_t size) {
+static ht* ht_create_size(size_t size) {
+    if (size + size < size) {
+        return NULL; // overflow (size too big)
+    }
+
     // Allocate space for hash table struct.
     ht* table = malloc(sizeof(ht));
     if (table == NULL) {
@@ -41,7 +45,7 @@ static ht* _ht_create(size_t size) {
 }
 
 ht* ht_create(void) {
-    return _ht_create(INITIAL_SIZE);
+    return ht_create_size(INITIAL_SIZE);
 }
 
 void ht_destroy(ht* table) {
@@ -94,9 +98,9 @@ void* ht_get(ht* table, const char* key) {
 
 // Expand hash table to twice its current size. Return true on success,
 // false if out of memory.
-static bool _ht_expand(ht* table) {
+static bool ht_expand(ht* table) {
     // Creating new table so we can use ht_set to move items into it.
-    ht* new_table = _ht_create(table->capacity);
+    ht* new_table = ht_create_size(table->capacity);
     if (new_table == NULL) {
         return false;
     }
@@ -135,7 +139,7 @@ const char* ht_set(ht* table, const char* key, void* value) {
 
     // If length will exceed half of current capacity, expand it.
     if (table->length >= table->capacity / 2) {
-        if (!_ht_expand(table)) {
+        if (!ht_expand(table)) {
             return NULL;
         }
         // Recalculate index as capacity has changed.

@@ -9,18 +9,7 @@
 // Hash table structure: create with ht_create, free with ht_destroy.
 typedef struct ht ht;
 
-// Hash table iterator: create with ht_iterator, iterate with ht_next.
-typedef struct {
-    char* key;      // current key
-    void* value;    // current value
-
-    // Don't use these fields directly.
-    ht* _table;     // reference to hash table being iterated
-    size_t _index;  // current index into ht._entries
-} hti;
-
-// Create new hash table and return pointer to it, or NULL if out of
-// memory.
+// Create hash table and return pointer to it, or NULL if out of memory.
 ht* ht_create(void);
 
 // Free memory allocated for hash table, including allocated keys.
@@ -38,6 +27,16 @@ const char* ht_set(ht* table, const char* key, void* value);
 
 // Return number of items in hash table.
 size_t ht_length(ht* table);
+
+// Hash table iterator: create with ht_iterator, iterate with ht_next.
+typedef struct {
+    char* key;      // current key
+    void* value;    // current value
+
+    // Don't use these fields directly.
+    ht* _table;     // reference to hash table being iterated
+    size_t _index;  // current index into ht._entries
+} hti;
 
 // Return new hash table iterator (for use with ht_next).
 hti ht_iterator(ht* table);
