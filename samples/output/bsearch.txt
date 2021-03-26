@@ -1,0 +1,2 @@
+bsearch: value of 'bob' is 11
+binary_search: value of 'bob' is 11

@@ -1,0 +1,16 @@
+index 0: empty
+index 1: key jane, value 100
+index 2: empty
+index 3: empty
+index 4: key bob, value 11
+index 5: empty
+index 6: empty
+index 7: key foo, value 10
+index 8: key bazz, value 36
+index 9: key x, value 200
+index 10: key bar, value 42
+index 11: empty
+index 12: key buzz, value 7
+index 13: empty
+index 14: empty
+index 15: empty
