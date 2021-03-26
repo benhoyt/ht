@@ -9,7 +9,7 @@
 
 // Hash table entry (slot may be filled or empty).
 typedef struct {
-    char* key;  // key is NULL if this slot is empty
+    const char* key;  // key is NULL if this slot is empty
     void* value;
 } ht_entry;
 
@@ -44,7 +44,7 @@ void ht_destroy(ht* table) {
     // First free allocated keys.
     for (size_t i = 0; i < table->capacity; i++) {
         if (table->entries[i].key != NULL) {
-            free(table->entries[i].key);
+            free((void*)table->entries[i].key);
         }
     }
 

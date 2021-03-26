@@ -30,12 +30,12 @@ size_t ht_length(ht* table);
 
 // Hash table iterator: create with ht_iterator, iterate with ht_next.
 typedef struct {
-    char* key;      // current key
-    void* value;    // current value
+    const char* key;  // current key
+    void* value;      // current value
 
     // Don't use these fields directly.
-    ht* _table;     // reference to hash table being iterated
-    size_t _index;  // current index into ht._entries
+    ht* _table;       // reference to hash table being iterated
+    size_t _index;    // current index into ht._entries
 } hti;
 
 // Return new hash table iterator (for use with ht_next).

@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
     }
 
     // Copy keys to array
-    char** keys = malloc(ht_length(counts) * sizeof(char*));
+    const char** keys = malloc(ht_length(counts) * sizeof(char*));
     if (keys == NULL) {
         exit_nomem();
     }
