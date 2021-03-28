@@ -37,14 +37,12 @@ item* binary_search(item* items, size_t size, const char* key) {
             return &items[mid];
         }
         if (c < 0) {
-            low = mid + 1;
+            low = mid + 1; // eliminate low half of array
         } else {
-            high = mid;
+            high = mid;    // eliminate high half of array
         }
     }
-    if (low < size && strcmp(items[low].key, key) == 0) {
-        return &items[low];
-    }
+    // Entire array has been eliminated, key not found.
     return NULL;
 }
 
