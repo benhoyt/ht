@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     }
     clock_t end = clock();
     double elapsed_ms = (double)(end - start) / CLOCKS_PER_SEC * 1000;
-    printf("setting %lu keys: %.09fs\n", ht_length(counts), elapsed_ms);
+    printf("setting %lu keys: %.09fms\n", ht_length(counts), elapsed_ms);
 
     return 0;
 }
