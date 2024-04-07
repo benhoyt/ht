@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
         exit_nomem();
     }
 
-    for (char* p = contents; *p; p++) {
+    for (char* p = contents; *p;) {
         // Skip whitespace.
         while (*p && *p <= ' ') {
             p++;
@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
         }
         if (*p != 0) {
             *p = 0;
+            p++;
         }
 
         // Look up word.
